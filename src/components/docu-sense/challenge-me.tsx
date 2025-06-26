@@ -70,13 +70,7 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
   };
 
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader>
-        <CardTitle className="font-headline">Challenge Me</CardTitle>
-        <CardDescription>Test your comprehension with these AI-generated questions.</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full pr-4 -mr-4">
+    <div className="h-full flex flex-col">
         {isLoading ? (
           <div className="space-y-4">
             <Skeleton className="h-12 w-full" />
@@ -87,21 +81,21 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
           <Accordion type="single" collapsible className="w-full space-y-2">
             {challenges.map((challenge, index) => (
               <AccordionItem value={`item-${index}`} key={index} className="border-b-0">
-                <AccordionTrigger className="p-3 bg-secondary rounded-lg hover:no-underline [&[data-state=open]]:rounded-b-none">
-                  <div className="flex items-center gap-3">
+                <AccordionTrigger className="p-3 bg-muted rounded-lg hover:no-underline [&[data-state=open]]:rounded-b-none text-left">
+                  <div className="flex items-center gap-3 w-full">
                     {challenge.evaluation ? (
                       challenge.evaluation.isCorrect ? (
-                        <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-500 shrink-0" />
                       ) : (
-                        <XCircle className="h-5 w-5 text-red-500" />
+                        <XCircle className="h-5 w-5 text-red-600 dark:text-red-500 shrink-0" />
                       )
                     ) : (
-                      <div className="h-5 w-5 bg-muted rounded-full" />
+                      <div className="h-5 w-5 bg-background dark:bg-secondary rounded-full shrink-0" />
                     )}
-                    <span className="text-left flex-1">{challenge.question}</span>
+                    <span className="flex-1">{challenge.question}</span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="p-4 border border-t-0 rounded-b-lg">
+                <AccordionContent className="p-4 border border-t-0 rounded-b-lg bg-card">
                   <form onSubmit={(e) => { e.preventDefault(); handleSubmit(index); }} className="space-y-4">
                     <Input
                       placeholder="Your answer..."
@@ -115,12 +109,12 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
                     </Button>
                   </form>
                   {challenge.evaluation && (
-                    <div className="mt-4 p-3 rounded-md bg-secondary/50">
+                    <div className="mt-4 p-3 rounded-md bg-muted">
                       <h4 className="font-semibold flex items-center gap-2">
                         {challenge.evaluation.isCorrect ? (
-                          <ThumbsUp className="h-4 w-4 text-green-600" />
+                          <ThumbsUp className="h-4 w-4 text-green-600 dark:text-green-500" />
                         ) : (
-                          <ThumbsDown className="h-4 w-4 text-red-600" />
+                          <ThumbsDown className="h-4 w-4 text-red-600 dark:text-red-500" />
                         )}
                         Evaluation Feedback
                       </h4>
@@ -138,8 +132,6 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
             ))}
           </Accordion>
         )}
-        </ScrollArea>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

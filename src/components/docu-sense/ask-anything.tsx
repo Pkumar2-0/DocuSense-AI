@@ -61,7 +61,7 @@ export function AskAnything({ document }: AskAnythingProps) {
   };
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col shadow-lg">
       <CardHeader>
         <CardTitle className="font-headline">Ask Anything</CardTitle>
         <CardDescription>Ask free-form questions about the document's content.</CardDescription>
@@ -72,13 +72,13 @@ export function AskAnything({ document }: AskAnythingProps) {
             {messages.map((message) => (
               <div key={message.id} className={cn('flex items-start gap-3', message.role === 'user' ? 'justify-end' : 'justify-start')}>
                 {message.role === 'ai' && (
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-8 w-8 border">
                     <AvatarFallback><Bot className="h-5 w-5"/></AvatarFallback>
                   </Avatar>
                 )}
                 <div className={cn(
-                    'p-3 rounded-lg max-w-sm md:max-w-md lg:max-w-lg',
-                    message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-secondary'
+                    'px-4 py-3 rounded-2xl max-w-sm md:max-w-md lg:max-w-lg shadow-md',
+                    message.role === 'user' ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card border rounded-bl-none'
                   )}>
                   <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                    {message.reference && (
@@ -89,7 +89,7 @@ export function AskAnything({ document }: AskAnythingProps) {
                   )}
                 </div>
                 {message.role === 'user' && (
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-8 w-8 border">
                     <AvatarFallback><User className="h-5 w-5"/></AvatarFallback>
                   </Avatar>
                 )}
@@ -97,10 +97,10 @@ export function AskAnything({ document }: AskAnythingProps) {
             ))}
             {isLoading && (
                <div className="flex items-start gap-3 justify-start">
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-8 w-8 border">
                     <AvatarFallback><Bot className="h-5 w-5"/></AvatarFallback>
                   </Avatar>
-                  <div className="p-3 rounded-lg bg-secondary space-y-2">
+                  <div className="px-4 py-3 rounded-2xl rounded-bl-none bg-card border space-y-2">
                     <Skeleton className="h-3 w-12" />
                     <Skeleton className="h-3 w-32" />
                   </div>
@@ -115,6 +115,7 @@ export function AskAnything({ document }: AskAnythingProps) {
             placeholder="Ask a question..."
             disabled={isLoading}
             autoComplete="off"
+            className="text-base"
           />
           <Button type="submit" disabled={isLoading || !input.trim()} size="icon">
             <Send className="h-4 w-4" />
