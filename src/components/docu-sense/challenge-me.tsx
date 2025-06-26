@@ -52,6 +52,8 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
   };
 
   const handleSubmit = async (index: number) => {
+    if (!challenges[index].answer.trim()) return;
+
     const newChallenges = [...challenges];
     newChallenges[index].isEvaluating = true;
     setChallenges(newChallenges);
@@ -62,17 +64,20 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
       answer: challenges[index].answer,
     });
 
-    const finalChallenges = [...challenges];
-    finalChallenges[index].evaluation = result;
-    finalChallenges[index].isEvaluating = false;
-    setChallenges(finalChallenges);
+    // Use a function for the state update to ensure we have the latest state
+    setChallenges(prevChallenges => {
+      const finalChallenges = [...prevChallenges];
+      finalChallenges[index].evaluation = result;
+      finalChallenges[index].isEvaluating = false;
+      return finalChallenges;
+    });
   };
 
   return (
     <Card className="h-full flex flex-col shadow-lg">
       <CardHeader>
-        <CardTitle className="font-headline">Challenge Me</CardTitle>
-        <CardDescription>Test your comprehension with these AI-generated questions.</CardDescription>
+        <CardTitle className="font-headline">Ready for a Challenge?</CardTitle>
+        <CardDescription>Let's see how well you understood the document. Give these questions a try!</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col overflow-y-auto p-4">
         {isLoading ? (
@@ -94,7 +99,7 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
                         <XCircle className="h-5 w-5 text-red-600 dark:text-red-500 shrink-0" />
                       )
                     ) : (
-                      <div className="h-5 w-5 bg-background dark:bg-secondary rounded-full shrink-0" />
+                      <div className="h-5 w-5 bg-background dark:bg-secondary rounded-full shrink-0 border" />
                     )}
                     <span className="flex-1">{challenge.question}</span>
                   </div>
@@ -105,22 +110,22 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
                       placeholder="Your answer..."
                       value={challenge.answer}
                       onChange={(e) => handleAnswerChange(index, e.target.value)}
-                      disabled={challenge.isEvaluating}
+                      disabled={challenge.isEvaluating || !!challenge.evaluation}
                     />
-                    <Button type="submit" disabled={!challenge.answer.trim() || challenge.isEvaluating}>
+                    <Button type="submit" disabled={!challenge.answer.trim() || challenge.isEvaluating || !!challenge.evaluation}>
                       {challenge.isEvaluating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                      Submit Answer
+                      Check Answer
                     </Button>
                   </form>
                   {challenge.evaluation && (
-                    <div className="mt-4 p-3 rounded-md bg-muted">
+                    <div className="mt-4 p-3 rounded-md bg-muted/50">
                       <h4 className="font-semibold flex items-center gap-2">
                         {challenge.evaluation.isCorrect ? (
                           <ThumbsUp className="h-4 w-4 text-green-600 dark:text-green-500" />
                         ) : (
                           <ThumbsDown className="h-4 w-4 text-red-600 dark:text-red-500" />
                         )}
-                        Evaluation Feedback
+                        Evaluation
                       </h4>
                       <p className="text-sm mt-2 text-muted-foreground">{challenge.evaluation.feedback}</p>
                       {challenge.evaluation.reference && (

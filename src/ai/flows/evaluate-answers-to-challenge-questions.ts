@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview Evaluates user answers to challenge questions, providing feedback and references from the document.
+ * @fileOverview Evaluates user answers to challenge questions, providing friendly, encouraging feedback.
  *
  * - evaluateAnswer - A function that evaluates the answer.
  * - EvaluateAnswerInput - The input type for the evaluateAnswer function.
@@ -19,8 +19,8 @@ export type EvaluateAnswerInput = z.infer<typeof EvaluateAnswerInputSchema>;
 
 const EvaluateAnswerOutputSchema = z.object({
   isCorrect: z.boolean().describe('Whether the answer is correct or not.'),
-  feedback: z.string().describe('The feedback on the answer, including specific references from the document for justification.'),
-  reference: z.string().optional().describe('The reference (e.g., paragraph number) that justifies the answer. Only include if strictly necessary.'),
+  feedback: z.string().describe('Friendly and constructive feedback on the answer, including references for justification.'),
+  reference: z.string().optional().describe('A specific quote from the document that justifies the answer.'),
 });
 export type EvaluateAnswerOutput = z.infer<typeof EvaluateAnswerOutputSchema>;
 
@@ -32,25 +32,20 @@ const evaluateAnswerPrompt = ai.definePrompt({
   name: 'evaluateAnswerPrompt',
   input: {schema: EvaluateAnswerInputSchema},
   output: {schema: EvaluateAnswerOutputSchema},
-  prompt: `You are an expert evaluator assessing user answers to questions about a document.
+  prompt: `You are a friendly and encouraging tutor. Your goal is to evaluate a user's answer to a question about a document and provide constructive, helpful feedback.
 
-  Document Content: {{{documentContent}}}
+  Document Content:
+  ---
+  {{{documentContent}}}
+  ---
+
   Question: {{{question}}}
-  Answer: {{{answer}}}
+  User's Answer: {{{answer}}}
 
-  Determine if the answer is correct based on the document content.
-  Provide feedback on the answer, including specific references from the document for justification.
-  If the answer is incorrect or incomplete, explain why and provide the correct information from the document.
-  Only include a direct quote from the document if it is necessary to explain the answer.
-
-  Format your answer like:
-  {
-    "isCorrect": true or false,
-    "feedback": "Explanation of why the answer is correct or incorrect, with references.",
-    "reference": "Paragraph number or section title if strictly necessary."
-  }
-
-  Ensure that isCorrect, feedback and reference are valid.
+  Analyze the user's answer based *only* on the document content.
+  - If the answer is correct, affirm it and briefly explain why, perhaps referencing the document.
+  - If the answer is incorrect or partially correct, gently explain the misunderstanding and guide the user to the correct answer using information and direct quotes from the document.
+  - Always maintain a positive and supportive tone.
 `,
 });
 

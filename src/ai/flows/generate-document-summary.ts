@@ -1,9 +1,9 @@
 'use server';
 
 /**
- * @fileOverview This file defines a Genkit flow for generating a concise summary of a document.
+ * @fileOverview This file defines a Genkit flow for generating a clear and helpful summary of a document.
  *
- * - generateDocumentSummary - A function that takes document content as input and returns a summary.
+ * - generateDocumentSummary - A function that takes document content and returns a summary.
  * - GenerateDocumentSummaryInput - The input type for the generateDocumentSummary function.
  * - GenerateDocumentSummaryOutput - The return type for the generateDocumentSummary function.
  */
@@ -23,7 +23,7 @@ export type GenerateDocumentSummaryInput = z.infer<
 const GenerateDocumentSummaryOutputSchema = z.object({
   summary: z
     .string()
-    .describe('A concise summary of the document, no more than 150 words.'),
+    .describe('A clear, concise summary of the document (around 150 words).'),
 });
 export type GenerateDocumentSummaryOutput = z.infer<
   typeof GenerateDocumentSummaryOutputSchema
@@ -39,7 +39,14 @@ const prompt = ai.definePrompt({
   name: 'generateDocumentSummaryPrompt',
   input: {schema: GenerateDocumentSummaryInputSchema},
   output: {schema: GenerateDocumentSummaryOutputSchema},
-  prompt: `You are an expert summarizer. Please provide a concise summary of the following document content, no more than 150 words.\n\nDocument Content:\n{{{documentContent}}}`,
+  prompt: `Your goal is to help the user quickly grasp the main points of their document.
+
+  Please write a clear, concise, and easy-to-read summary of the following document content. The summary should be no more than 150 words. Focus on the key information and takeaways.
+
+  Document Content:
+  ---
+  {{{documentContent}}}
+  ---`,
 });
 
 const generateDocumentSummaryFlow = ai.defineFlow(

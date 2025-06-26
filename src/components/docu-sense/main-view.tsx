@@ -24,8 +24,8 @@ export function MainView({ document, onReset }: MainViewProps) {
           <span className="font-medium truncate max-w-xs">{document.name}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Button onClick={onReset}>
-            Upload New
+          <Button onClick={onReset} variant="outline">
+            Start Over
           </Button>
         </div>
       </header>

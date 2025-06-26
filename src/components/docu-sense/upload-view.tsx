@@ -37,8 +37,8 @@ export function UploadView({ onUpload }: UploadViewProps) {
       </div>
       <Card className="w-full max-w-2xl shadow-2xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-headline">Upload Your Document</CardTitle>
-          <CardDescription>Drag and drop or select a .txt or .pdf file to begin.</CardDescription>
+          <CardTitle className="text-2xl font-headline">Let's Get Started</CardTitle>
+          <CardDescription>Upload a document to begin interacting with its content.</CardDescription>
         </CardHeader>
         <CardContent>
           <div
@@ -52,14 +52,14 @@ export function UploadView({ onUpload }: UploadViewProps) {
             <div className="flex flex-col items-center gap-4 text-muted-foreground">
               <UploadCloud className={cn('w-16 h-16 transition-colors', isDragging ? 'text-primary' : 'group-hover:text-primary/80')} />
               <p className="text-lg font-medium">
-                {isDragging ? 'Drop the file here!' : "Drag and drop a file, or click to select"}
+                {isDragging ? 'Drop the file here!' : "Drag 'n' drop a file, or click to select"}
               </p>
-              <p className="text-sm">Supported formats: .txt, .pdf</p>
+              <p className="text-sm">Supported formats: TXT & PDF</p>
             </div>
           </div>
           <Button onClick={open} className="w-full mt-6" size="lg">
             <FileUp className="mr-2 h-5 w-5" />
-            Select Document
+            Choose a File
           </Button>
         </CardContent>
       </Card>

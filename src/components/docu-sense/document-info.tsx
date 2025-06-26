@@ -34,7 +34,7 @@ export function DocumentInfo({ document }: DocumentInfoProps) {
       </CardHeader>
       <CardContent className="flex flex-col gap-4 overflow-hidden">
         <div>
-          <h3 className="font-semibold mb-2">AI Summary</h3>
+          <h3 className="font-semibold mb-2">Quick Summary</h3>
           {isLoading ? (
             <div className="space-y-2">
               <Skeleton className="h-4 w-full" />
@@ -47,7 +47,7 @@ export function DocumentInfo({ document }: DocumentInfoProps) {
         </div>
         <Separator />
         <div className="flex-1 flex flex-col overflow-hidden">
-          <h3 className="font-semibold mb-2">Full Text</h3>
+          <h3 className="font-semibold mb-2">Original Document</h3>
           <ScrollArea className="flex-1 pr-4">
             <p className="text-sm text-muted-foreground whitespace-pre-wrap">{document.content}</p>
           </ScrollArea>
