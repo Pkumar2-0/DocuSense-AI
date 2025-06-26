@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { CheckCircle2, XCircle, BookText, ThumbsUp, ThumbsDown, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { ScrollArea } from '../ui/scroll-area';
 
 type Challenge = {
   question: string;
@@ -70,7 +69,12 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <Card className="h-full flex flex-col shadow-lg">
+      <CardHeader>
+        <CardTitle className="font-headline">Challenge Me</CardTitle>
+        <CardDescription>Test your comprehension with these AI-generated questions.</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-1 flex flex-col overflow-y-auto p-4">
         {isLoading ? (
           <div className="space-y-4">
             <Skeleton className="h-12 w-full" />
@@ -132,6 +136,7 @@ export function ChallengeMe({ document }: ChallengeMeProps) {
             ))}
           </Accordion>
         )}
-    </div>
+      </CardContent>
+    </Card>
   );
 }
