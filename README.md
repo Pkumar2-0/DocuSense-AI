@@ -64,9 +64,25 @@ The application is built with a modern web stack, leveraging server-side renderi
 └── tailwind.config.ts     # Tailwind CSS configuration
 ```
 
+## Getting Your Code
+
+There are two primary ways to get the project code onto your local machine:
+
+1.  **Downloading a ZIP file**:
+    - In your development environment, look for an option to "Download Project" or "Export as ZIP". This will package all the files for you.
+    - Once downloaded, unzip the file on your machine.
+
+2.  **Cloning from a Git Repository (Recommended)**:
+    - If you have connected this project to a Git provider (like GitHub, GitLab, or Bitbucket), you can clone it. This is the best way to manage versions and collaborate.
+    - Use the `git clone` command with your repository's URL:
+    ```bash
+    git clone <your-repository-url>
+    cd docu-sense-ai
+    ```
+
 ## Local Setup
 
-Follow these steps to run the project on your local machine.
+Once you have the code, follow these steps to run the project on your local machine.
 
 ### Prerequisites
 
@@ -74,20 +90,15 @@ Follow these steps to run the project on your local machine.
 -   [npm](https://www.npmjs.com/) or a compatible package manager
 -   A Google AI API Key. You can get one from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
-### Installation
+### Installation & Configuration
 
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository-url>
-    cd <repository-name>
-    ```
-
-2.  **Install dependencies**:
+1.  **Install dependencies**:
+    From the root of your project directory, run:
     ```bash
     npm install
     ```
 
-3.  **Set up environment variables**:
+2.  **Set up environment variables**:
     -   Create a `.env` file in the root of the project.
     -   Add your Google AI API key to the `.env` file:
         ```
