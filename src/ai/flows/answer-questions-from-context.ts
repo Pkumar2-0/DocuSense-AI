@@ -47,14 +47,10 @@ Here is the document content:
 ---
 
 {{#if conversationHistory}}
-Here is our conversation history so far. Use it to understand the context of the user's new question.
+Here is our conversation history so far. Use it to understand the context of the user's new question. The 'ai' role refers to you.
 ---
 {{#each conversationHistory}}
-{{#if (eq this.role "user")}}
-User: {{{this.content}}}
-{{else}}
-You: {{{this.content}}}
-{{/if}}
+{{this.role}}: {{{this.content}}}
 {{/each}}
 ---
 {{/if}}
